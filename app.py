@@ -73,8 +73,11 @@ def index():
     )
 
 
-@app.post("/products")
+@app.route("/products", methods=["GET", "POST"])
 def add_product():
+    if request.method == "GET":
+        return redirect(url_for("index"))
+
     name = request.form.get("name", "").strip()
     price = request.form.get("price", "").strip()
     stock = request.form.get("stock", "").strip()
@@ -112,8 +115,11 @@ def delete_product(product_id):
     return redirect(url_for("index"))
 
 
-@app.post("/sales")
+@app.route("/sales", methods=["GET", "POST"])
 def record_sale():
+    if request.method == "GET":
+        return redirect(url_for("index"))
+
     product_id = request.form.get("product_id", "").strip()
     quantity = request.form.get("quantity", "").strip()
 
